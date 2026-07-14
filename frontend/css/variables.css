@@ -1,0 +1,53 @@
+:root {
+  /* Colors */
+  --color-bg-primary: #FCFAF7;
+  --color-bg-secondary: #EDE7DE;
+  --color-bg-white: #FFFFFF;
+  --color-text-primary: #2B2B2B;
+  --color-text-secondary: #5C5C5C;
+  --color-accent: #C2A46E;
+  --color-border: #E0DAD2;
+  --color-success: #3B755F;
+  --color-error: #C85A4F;
+  --color-focus-ring: #C2A46E;
+
+  /* Typography */
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-size-h1: 2.25rem;
+  --font-size-h2: 1.75rem;
+  --font-size-h3: 1.25rem;
+  --font-size-body-lg: 1.125rem;
+  --font-size-body: 1rem;
+  --font-size-body-sm: 0.875rem;
+  --font-size-button: 0.9375rem;
+  --font-size-overline: 0.75rem;
+  --line-height-heading: 1.2;
+  --line-height-body: 1.5;
+
+  /* Spacing */
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 40px;
+  --space-xl: 64px;
+  --space-2xl: 80px;
+  --space-3xl: 120px;
+
+  /* Shadows */
+  --shadow-1: 0 2px 8px rgba(0,0,0,0.04);
+  --shadow-2: 0 8px 30px rgba(0,0,0,0.06);
+  --shadow-3: 0 16px 48px rgba(0,0,0,0.08);
+
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 12px;
+
+  /* Layout */
+  --max-content-width: 1280px;
+
+  /* Transitions */
+  --transition-fast: 200ms ease;
+  --transition-smooth: 300ms ease;
+}

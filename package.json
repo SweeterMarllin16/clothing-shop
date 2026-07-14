@@ -1,0 +1,17 @@
+{
+  "name": "elan-boutique",
+  "version": "1.0.0",
+  "description": "Premium clothing boutique website",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "dotenv": "^16.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
