@@ -39,3 +39,4 @@ Thumbs.db
 
 # Runtime files
 *.pid
+.DS_Store
