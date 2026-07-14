@@ -9,3 +9,4 @@ A premium, mobile‑first website for a local clothing boutique, built with vani
 3. Open `http://localhost:3000`
 
 All design tokens, components, and pages follow the comprehensive design system documented in `docs/DESIGN.md`.# clothing-shop
+# clothing-shop
