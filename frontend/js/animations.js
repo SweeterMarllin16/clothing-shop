@@ -1,17 +1,19 @@
+let scrollObserver = null;
+
 export function initScrollReveal() {
-  const observer = new IntersectionObserver((entries) => {
+  if (scrollObserver) {
+    scrollObserver.disconnect();
+  }
+
+  scrollObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = 1;
-        entry.target.style.transform = 'translateY(0)';
-      }
+      entry.target.classList.toggle('visible', entry.isIntersecting);
     });
   }, { threshold: 0.15 });
 
-  document.querySelectorAll('section, .card, .fade-in').forEach(el => {
-    el.style.opacity = 0;
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    observer.observe(el);
+  document.querySelectorAll('section, .card').forEach(el => {
+    el.classList.add('fade-in');
+    el.classList.remove('visible');
+    scrollObserver.observe(el);
   });
 }

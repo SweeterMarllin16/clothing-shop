@@ -1,50 +1,64 @@
-import { STORE_INFO } from '../utils/constants.js';
+import { STORE_INFO, PAGES } from '../utils/constants.js';
 
-export function Navbar(activePage) {
+export function Navbar() {
   const link = (href, text) => `
-    <a href="${href}" class="${window.location.pathname === href ? 'active' : ''}" data-link>${text}</a>
+    <a href="${href}" data-link>${text}</a>
   `;
   return `
     <nav class="navbar" id="navbar">
-      <a href="/" class="nav-logo" data-link>Élan</a>
+      <a href="${PAGES.HOME}" class="nav-logo" data-link>Élan</a>
       <ul class="nav-links">
-        <li>${link('/', 'Home')}</li>
-        <li>${link('/about', 'About')}</li>
-        <li>${link('/collections', 'Collections')}</li>
-        <li>${link('/gallery', 'Gallery')}</li>
-        <li>${link('/contact', 'Contact')}</li>
+        <li>${link(PAGES.HOME, 'Home')}</li>
+        <li>${link(PAGES.ABOUT, 'About')}</li>
+        <li>${link(PAGES.COLLECTIONS, 'Collections')}</li>
+        <li>${link(PAGES.GALLERY, 'Gallery')}</li>
+        <li>${link(PAGES.CONTACT, 'Contact')}</li>
       </ul>
       <div class="nav-actions">
-        <a href="/contact" class="btn btn-outline btn-sm" data-link>Get Directions</a>
+        <a href="${PAGES.CONTACT}" class="btn btn-outline btn-sm" data-link>Get Directions</a>
       </div>
-      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </nav>
     <div class="overlay" id="overlay"></div>
     <div class="mobile-menu" id="mobileMenu">
-      <a href="/" data-link>Home</a>
-      <a href="/about" data-link>About</a>
-      <a href="/collections" data-link>Collections</a>
-      <a href="/gallery" data-link>Gallery</a>
-      <a href="/contact" data-link>Contact</a>
-      <a href="tel:${STORE_INFO.phone}" class="btn btn-primary mt-2">Call Now</a>
+      <a href="${PAGES.HOME}" data-link>Home</a>
+      <a href="${PAGES.ABOUT}" data-link>About</a>
+      <a href="${PAGES.COLLECTIONS}" data-link>Collections</a>
+      <a href="${PAGES.GALLERY}" data-link>Gallery</a>
+      <a href="${PAGES.CONTACT}" data-link>Contact</a>
+      <a href="tel:${STORE_INFO.phone}" class="btn btn-primary mt-2" aria-label="Call us">Call Now</a>
     </div>
   `;
 }
+
+export function updateActiveLink() {
+  const pathname = window.location.pathname;
+  document.querySelectorAll('.nav-links a, .mobile-menu a[data-link]').forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href') === pathname);
+  });
+}
+
+let navbarScrollHandler = null;
 
 export function initNavbar() {
   const navbar = document.getElementById('navbar');
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobileMenu');
   const overlay = document.getElementById('overlay');
+  if (!navbar || !hamburger || !mobileMenu || !overlay) return;
 
-  // Scroll effect
-  window.addEventListener('scroll', () => {
+  updateActiveLink();
+
+  if (navbarScrollHandler) {
+    window.removeEventListener('scroll', navbarScrollHandler);
+  }
+  navbarScrollHandler = () => {
     navbar.classList.toggle('scrolled', window.scrollY > 50);
-  });
+  };
+  window.addEventListener('scroll', navbarScrollHandler);
 
-  // Mobile toggle
   function open() {
     mobileMenu.classList.add('open');
     overlay.classList.add('active');
@@ -61,4 +75,7 @@ export function initNavbar() {
   }
   hamburger.addEventListener('click', () => mobileMenu.classList.contains('open') ? close() : open());
   overlay.addEventListener('click', close);
+  mobileMenu.querySelectorAll('[data-link]').forEach(link => {
+    link.addEventListener('click', close);
+  });
 }

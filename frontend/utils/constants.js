@@ -4,7 +4,7 @@ export const STORE_INFO = {
   phone: '+91 98765 43210',
   whatsapp: '+919876543210',
   hours: 'Mon–Sat: 10am–8pm | Sun: 11am–6pm',
-  mapEmbedUrl: 'https://www.google.com/maps/embed?pb=...', // truncated for brevity
+  mapEmbedUrl: 'https://www.google.com/maps/embed?pb=...',
 };
 
 export const PAGES = {
@@ -15,4 +15,18 @@ export const PAGES = {
   CONTACT: '/contact',
   PRIVACY: '/privacy',
   NOT_FOUND: '/404',
+};
+
+export const API_BASE = '/api';
+
+export const FORM_VALIDATION = {
+  NAME_MIN: 2,
+  MESSAGE_MIN: 5,
+  MESSAGE_MAX: 1000,
+};
+
+export const BREAKPOINTS = {
+  MOBILE: 640,
+  TABLET: 1024,
+  DESKTOP: 1280,
 };

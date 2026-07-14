@@ -1,19 +1,17 @@
-import { Navbar, initNavbar } from '../components/Navbar.js';
-import { Footer } from '../components/Footer.js';
+import { Layout, initLayout } from '../components/Layout.js';
+import { PAGES } from '../utils/constants.js';
 
 export function NotFound() {
-  return `
-    ${Navbar()}
-    <main class="container">
+  const content = `
       <section class="content-panel">
         <h1>Page not found</h1>
         <p>The page you requested does not exist.</p>
+        <a href="${PAGES.HOME}" class="btn btn-accent mt-2" data-link>Back to Home</a>
       </section>
-    </main>
-    ${Footer()}
   `;
+  return Layout({ content, mainClass: 'container' });
 }
 
 export function afterRender() {
-  initNavbar();
+  initLayout();
 }

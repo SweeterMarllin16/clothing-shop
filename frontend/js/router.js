@@ -1,5 +1,8 @@
 import { PAGES } from '../utils/constants.js';
 import * as Pages from '../pages/index.js';
+import { updateActiveLink } from '../components/Navbar.js';
+import { initScrollReveal } from './animations.js';
+import { lazyLoadImages } from '../utils/lazyLoad.js';
 
 const routes = [
   { path: PAGES.HOME, component: Pages.Home },
@@ -10,25 +13,44 @@ const routes = [
   { path: PAGES.PRIVACY, component: Pages.Privacy },
 ];
 
+function getRouteFromPath(path) {
+  const [pathname] = path.split('?');
+  return routes.find(r => r.path === pathname);
+}
+
+function renderView(app, component) {
+  const view = typeof component === 'function'
+    ? component()
+    : component.render();
+
+  app.textContent = '';
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = view;
+  app.appendChild(tempDiv);
+
+  if (typeof component.afterRender === 'function') {
+    component.afterRender();
+  }
+
+  updateActiveLink();
+  lazyLoadImages();
+  initScrollReveal();
+}
+
 export function initRouter(app) {
   function render() {
-    const path = window.location.pathname;
-    const route = routes.find(r => r.path === path);
+    const path = window.location.pathname + window.location.search;
+    const route = getRouteFromPath(path);
     const component = route ? route.component : Pages.NotFound;
-    const view = typeof component === 'function'
-      ? component()
-      : component.render();
-    app.innerHTML = view;
-    if (typeof component.afterRender === 'function') {
-      component.afterRender();
-    }
+    renderView(app, component);
   }
 
   window.addEventListener('popstate', render);
   document.addEventListener('click', e => {
-    if (e.target.matches('[data-link]')) {
+    const link = e.target.closest('[data-link]');
+    if (link) {
       e.preventDefault();
-      const href = e.target.getAttribute('href');
+      const href = link.getAttribute('href');
       window.history.pushState(null, '', href);
       render();
     }

@@ -1,4 +1,4 @@
-import { STORE_INFO } from '../utils/constants.js';
+import { STORE_INFO, PAGES } from '../utils/constants.js';
 
 export function Footer() {
   return `
@@ -10,9 +10,9 @@ export function Footer() {
         </div>
         <div>
           <h4>Quick Links</h4>
-          <a href="/" data-link>Home</a>
-          <a href="/about" data-link>About</a>
-          <a href="/collections" data-link>Collections</a>
+          <a href="${PAGES.HOME}" data-link>Home</a>
+          <a href="${PAGES.ABOUT}" data-link>About</a>
+          <a href="${PAGES.COLLECTIONS}" data-link>Collections</a>
         </div>
         <div>
           <h4>Contact</h4>

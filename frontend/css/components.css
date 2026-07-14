@@ -650,15 +650,13 @@ footer h4 {
 }
 
 /* Floating Buttons */
-.whatsapp-float {
+.whatsapp-float,
+.phone-float {
   position: fixed;
-  bottom: 24px;
   right: 24px;
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: #25D366;
-  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -667,12 +665,23 @@ footer h4 {
   z-index: 999;
   transition: transform var(--transition-fast);
 }
-.whatsapp-float:hover { transform: scale(1.1); }
+.whatsapp-float {
+  bottom: 24px;
+  background: #25D366;
+  color: white;
+}
+.phone-float {
+  bottom: 90px;
+  background: var(--color-accent);
+  color: white;
+}
+.whatsapp-float:hover,
+.phone-float:hover { transform: scale(1.1); }
 
 .back-to-top {
   position: fixed;
-  bottom: 100px;
-  right: 24px;
+  bottom: 156px;
+  right: 29px;
   width: 44px;
   height: 44px;
   border-radius: 50%;

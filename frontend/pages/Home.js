@@ -1,14 +1,11 @@
-import { Navbar, initNavbar } from '../components/Navbar.js';
-import { Footer } from '../components/Footer.js';
-import { FloatingButtons, initFloatingButtons } from '../components/FloatingButtons.js';
+import { Layout, initLayout } from '../components/Layout.js';
 import { SectionHeader } from '../components/SectionHeader.js';
 import { ProductCard } from '../components/ProductCard.js';
-import { STORE_INFO } from '../utils/constants.js';
+import { STORE_INFO, PAGES } from '../utils/constants.js';
+import { initContactForm } from '../utils/contactForm.js';
 
 export function Home() {
-  return `
-    ${Navbar()}
-    <main>
+  const content = `
       <!-- Hero -->
       <section class="hero">
         <div class="container hero-grid">
@@ -17,8 +14,8 @@ export function Home() {
             <h1>Timeless Style,<br>Local Heart</h1>
             <p class="hero-lead">Discover handpicked collections at ${STORE_INFO.name}. Personal styling, ethical fashion, and a warm welcome await.</p>
             <div class="btn-group hero-actions">
-              <a href="/contact" class="btn btn-accent" data-link>Visit Us Today</a>
-              <a href="/collections" class="btn btn-outline" data-link>Explore Collections</a>
+              <a href="${PAGES.CONTACT}" class="btn btn-accent" data-link>Visit Us Today</a>
+              <a href="${PAGES.COLLECTIONS}" class="btn btn-outline" data-link>Explore Collections</a>
             </div>
             <div class="hero-pills">
               <span>Women</span>
@@ -35,7 +32,7 @@ export function Home() {
               <li><strong>02</strong><span>Personal styling by appointment</span></li>
               <li><strong>03</strong><span>Tailored for everyday wear</span></li>
             </ul>
-            <a href="/gallery" class="btn btn-outline btn-sm" data-link>See the store</a>
+            <a href="${PAGES.GALLERY}" class="btn btn-outline btn-sm" data-link>See the store</a>
           </aside>
         </div>
         <div class="hero-orb hero-orb-1"></div>
@@ -47,16 +44,16 @@ export function Home() {
       <section class="container">
         ${SectionHeader('Shop by Category')}
         <div class="grid-4">
-          <a href="/collections?cat=women" class="category-card" data-link style="--media-image: url('assets/images/women-category.jpg');">
+          <a href="${PAGES.COLLECTIONS}?cat=women" class="category-card" data-link data-image="assets/images/women-category.jpg">
             <span class="card-overlay">Women</span>
           </a>
-          <a href="/collections?cat=men" class="category-card" data-link style="--media-image: url('assets/images/men-category.jpg');">
+          <a href="${PAGES.COLLECTIONS}?cat=men" class="category-card" data-link data-image="assets/images/men-category.jpg">
             <span class="card-overlay">Men</span>
           </a>
-          <a href="/collections?cat=kids" class="category-card" data-link style="--media-image: url('assets/images/kids-category.jpg');">
+          <a href="${PAGES.COLLECTIONS}?cat=kids" class="category-card" data-link data-image="assets/images/kids-category.jpg">
             <span class="card-overlay">Kids</span>
           </a>
-          <a href="/collections?cat=accessories" class="category-card" data-link style="--media-image: url('assets/images/accessories-category.jpg');">
+          <a href="${PAGES.COLLECTIONS}?cat=accessories" class="category-card" data-link data-image="assets/images/accessories-category.jpg">
             <span class="card-overlay">Accessories</span>
           </a>
         </div>
@@ -98,12 +95,12 @@ export function Home() {
       <section class="container">
         ${SectionHeader('Inside Our Store')}
         <div class="gallery-grid">
-          <div class="gallery-tile" style="--media-image: url('assets/images/gallery-1.jpg');"></div>
-          <div class="gallery-tile" style="--media-image: url('assets/images/gallery-2.jpg');"></div>
-          <div class="gallery-tile" style="--media-image: url('assets/images/gallery-3.jpg');"></div>
+          <div class="gallery-tile" data-image="assets/images/gallery-1.jpg"></div>
+          <div class="gallery-tile" data-image="assets/images/gallery-2.jpg"></div>
+          <div class="gallery-tile" data-image="assets/images/gallery-3.jpg"></div>
         </div>
         <div class="text-center mt-2">
-          <a href="/gallery" class="btn btn-outline" data-link>View Full Gallery</a>
+          <a href="${PAGES.GALLERY}" class="btn btn-outline" data-link>View Full Gallery</a>
         </div>
       </section>
 
@@ -121,7 +118,7 @@ export function Home() {
             <p>${STORE_INFO.address}</p>
             <p>${STORE_INFO.phone}</p>
           </div>
-          <a href="https://maps.google.com/?q=${encodeURIComponent(STORE_INFO.name)}" target="_blank" class="btn btn-primary mt-2">Get Directions</a>
+          <a href="https://maps.google.com/?q=${encodeURIComponent(STORE_INFO.name)}" target="_blank" rel="noopener noreferrer" class="btn btn-primary mt-2">Get Directions</a>
         </div>
         <div class="contact-card card">
           <p class="overline">Visit Us</p>
@@ -129,7 +126,7 @@ export function Home() {
           <p>${STORE_INFO.address}</p>
           <p>${STORE_INFO.hours}</p>
           <p>${STORE_INFO.phone}</p>
-          <a href="https://maps.google.com/?q=${encodeURIComponent(STORE_INFO.name)}" target="_blank" class="btn btn-primary mt-2">Get Directions</a>
+          <a href="https://maps.google.com/?q=${encodeURIComponent(STORE_INFO.name)}" target="_blank" rel="noopener noreferrer" class="btn btn-primary mt-2">Get Directions</a>
         </div>
       </section>
 
@@ -137,28 +134,20 @@ export function Home() {
       <section class="container" id="contact-form-section">
         ${SectionHeader('Send Us a Message')}
         <form id="homeContactForm" class="contact-form">
-          <div class="form-group"><label for="name">Name</label><input type="text" id="name" required></div>
-          <div class="form-group"><label for="email">Email</label><input type="email" id="email" required></div>
-          <div class="form-group"><label for="message">Message</label><textarea id="message" rows="4" required></textarea></div>
+          <div class="form-group"><label for="name">Name</label><input type="text" id="name" name="name" required minlength="2"></div>
+          <div class="form-group"><label for="email">Email</label><input type="email" id="email" name="email" required></div>
+          <div class="form-group"><label for="message">Message</label><textarea id="message" name="message" rows="4" required minlength="5" maxlength="1000"></textarea></div>
           <button type="submit" class="btn btn-accent">Send Message</button>
+          <p class="form-error" style="color:var(--color-error, #c0392b);display:none;"></p>
           <p class="form-success" style="color:var(--color-success);display:none;">Thank you! We'll get back to you soon.</p>
         </form>
       </section>
-    </main>
-    ${Footer()}
-    ${FloatingButtons()}
   `;
+
+  return Layout({ content, floatingButtons: true });
 }
 
 export function afterRender() {
-  initNavbar();
-  initFloatingButtons();
-  // Contact form submission
-  document.getElementById('homeContactForm')?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    // Simulate submission (connect to backend later)
-    const form = e.target;
-    form.querySelector('.form-success').style.display = 'block';
-    form.reset();
-  });
+  initLayout({ floatingButtons: true });
+  initContactForm('homeContactForm');
 }
